@@ -1,0 +1,10 @@
+.user-list__filter {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  border-top: 2px solid rgb(5, 5, 5);
+  border-bottom: 2px solid rgb(5, 5, 5);
+}
+
+.user-list__paging {
+  grid-column-start: 2;
+}
