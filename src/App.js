@@ -1,20 +1,16 @@
 import "./App.css";
-import { Provider } from "react-redux";
-import store from "./redux/modules/users/store";
+import { useSelector } from "react-redux";
 
 //components
-import Filter from "./components/Filter";
-import Header from "./components/Header";
-import List from "./components/List";
+import DynamicContent from "./components/DynamicContent/";
 
 function App() {
+  const component = useSelector(
+    (state) => state.dynamicComponent.nameDynamicComponent
+  );
   return (
     <div className="App">
-      <Provider store={store}>
-        <Header />
-        <Filter />
-        <List />
-      </Provider>
+      <DynamicContent nameDynamicComponent={component} />
     </div>
   );
 }

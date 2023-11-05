@@ -2,7 +2,10 @@ import "./style.css";
 import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
-import { getPosts } from "../../redux/modules/users/action";
+import {
+  getAllPosts,
+  createPost,
+} from "../../redux/modules/users/reducers/postReducer";
 import {
   getCachePostsAction,
   clearAllPostsAction,
@@ -41,9 +44,10 @@ const Filter = () => {
   //const dispatch = useDispatch();
 
   const handleMenuClick = (e) => {
-    if (e.key === "1") store.dispatch(getPosts());
+    if (e.key === "1") store.dispatch(getAllPosts);
     if (e.key === "4") store.dispatch(getCachePostsAction());
     if (e.key === "5") store.dispatch(clearAllPostsAction());
+    if (e.key === "2") store.dispatch(() => createPost());
   };
 
   const menuProps = {

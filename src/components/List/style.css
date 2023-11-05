@@ -3,11 +3,28 @@ div.ant-col {
 }
 
 :where(.css-dev-only-do-not-override-2i2tap).ant-card {
-  border: 3px solid rgb(25, 25, 25);
+  border: 3px solid rgb(200, 200, 200);
 }
 
-.card__references {
+div.container2,
+div.container1 {
   display: flex;
-  padding-top: 25px;
+  padding-top: 5px;
   justify-content: space-between;
+}
+
+.container1 > div,
+.card__author {
+  margin-bottom: 20px;
+  text-align: left;
+  align-self: center;
+  font-weight: bold;
+}
+
+.card__body {
+  text-align: left;
+}
+div.card__references > button {
+  padding: 0;
+  margin: 5px;
 }
