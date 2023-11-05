@@ -1,45 +1,64 @@
 import "./style.css";
 import React from "react";
 import { UserOutlined } from "@ant-design/icons";
-import { Dropdown, message, Space } from "antd";
-const handleButtonClick = (e) => {
-  message.info("Click on left button.");
-  console.log("click left button", e);
-};
-const handleMenuClick = (e) => {
-  message.info("Click on menu item.");
-  console.log("click", e);
-};
+import { Dropdown, Space } from "antd";
+import { getPosts } from "../../redux/modules/users/action";
+import {
+  getCachePostsAction,
+  clearAllPostsAction,
+} from "../../redux/modules/users/reducers/getPosts";
+import store from "../../redux/modules/users/store";
+
 const items = [
   {
-    label: "по 10 на сторінці",
+    label: "Всі статті",
     key: "1",
     icon: <UserOutlined />,
   },
   {
-    label: "по 20 на сторінці",
+    label: "Створити статтю",
     key: "2",
     icon: <UserOutlined />,
   },
   {
-    label: "по 50 на сторінці",
+    label: "Всі фото",
     key: "3",
     icon: <UserOutlined />,
   },
+  {
+    label: "Тест",
+    key: "4",
+    icon: <UserOutlined />,
+  },
+  {
+    label: "Очистити",
+    key: "5",
+    icon: <UserOutlined />,
+  },
 ];
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
-};
-const Filter = () => (
-  <div className="user-list__filter">
-    <div className="user-list__paging">
-      <Space wrap>
-        <Dropdown.Button menu={menuProps} onClick={handleButtonClick}>
-          Фільтр
-        </Dropdown.Button>
-      </Space>
+
+const Filter = () => {
+  //const dispatch = useDispatch();
+
+  const handleMenuClick = (e) => {
+    if (e.key === "1") store.dispatch(getPosts());
+    if (e.key === "4") store.dispatch(getCachePostsAction());
+    if (e.key === "5") store.dispatch(clearAllPostsAction());
+  };
+
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+  };
+
+  return (
+    <div className="user-list__filter">
+      <div className="user-list__paging">
+        <Space wrap>
+          <Dropdown.Button menu={menuProps}>Фільтр</Dropdown.Button>
+        </Space>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 export default Filter;
