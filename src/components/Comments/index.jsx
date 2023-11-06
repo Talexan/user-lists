@@ -1,48 +1,30 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Collapse } from "antd";
 import Header from "../Header";
 import Filter from "../Filter";
-//import { useSelector } from "react-redux";
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-const items = [
-  {
-    key: "1",
-    label: "This is panel header 1",
-    children: <p>{text}</p>,
-  },
-  {
-    key: "2",
-    label: "This is panel header 2",
-    children: <p>{text}</p>,
-  },
-  {
-    key: "3",
-    label: "This is panel header 3",
-    children: <p>{text}</p>,
-  },
-];
+import "./style.css";
+
 const Comments = () => {
-  const onChange = (key) => {
-    console.log(key);
-  };
-  //const items = useSelector((state) => state.postReducer);
-  /* items.map((item) => {
+  let items = useSelector((state) => state.postReducer);
+  items = items.map((item) => {
     return {
       key: item.id,
-      label: item.email + "   " + item.name,
+      label: (
+        <span>
+          <b>{item.email + ":  "}</b>
+          <i>{item.name}</i>
+        </span>
+      ),
       children: item.body,
     };
-  }); */
+  });
   return (
     <div>
       <Header title={"Коментарі до статті"} />
       <Filter />
-      <Collapse items={items} defaultActiveKey={["1"]} onChange={onChange} />
+      <Collapse items={items} />
     </div>
   );
 };

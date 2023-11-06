@@ -3,9 +3,17 @@ import React from "react";
 import { Card, Col, Row, Button } from "antd";
 import { useSelector } from "react-redux";
 import store from "../../redux/modules/users/store";
-import { getPostsComments } from "../../redux/modules/users/reducers/postReducer";
-//import { setCommentComponentAction } from "../../redux/modules/users/reducers/dynamicComponent";
-//import store from "../../redux/modules/users/store";
+import {
+  getPostsCommentsAction,
+  getFotosAction,
+  hidePostAction,
+} from "../../redux/modules/users/reducers/postReducer";
+import {
+  setCommentComponentAction,
+  setFotosComponentAction,
+} from "../../redux/modules/users/reducers/dynamicComponent";
+import { prepare } from "../../helpers";
+import { clearPostAction } from "../../redux/modules/users/reducers/getPosts";
 
 /* {
   id: 1,
@@ -14,13 +22,6 @@ import { getPostsComments } from "../../redux/modules/users/reducers/postReducer
   userId: 1
 } */
 
-const prepare = (array, size) => {
-  let subarray = []; //массив в который будет выведен результат.
-  for (let i = 0; i < Math.ceil(array.length / size); i++) {
-    subarray[i] = array.slice(i * size, i * size + size);
-  }
-  return subarray;
-};
 const List = ({ test }) => {
   let state = useSelector((state) => {
     console.log(state);
@@ -28,9 +29,6 @@ const List = ({ test }) => {
     return state.postReducer;
   });
 
-  //const dispatch = useDispatch();
-
-  //  let state = store.getState().getCachePosts;
   let preList = prepare(state, 3);
 
   return preList.map((row) => {
@@ -49,7 +47,14 @@ const List = ({ test }) => {
                     postID: {card?.postId || card?.id}
                   </div>
                   <div>
-                    <Button type="link" danger>
+                    <Button
+                      type="link"
+                      danger
+                      onClick={(e) => {
+                        if (test) store.dispatch(clearPostAction(card?.id));
+                        else store.dispatch(hidePostAction(card?.id));
+                      }}
+                    >
                       Приховати
                     </Button>
                   </div>
@@ -66,13 +71,23 @@ const List = ({ test }) => {
                       <Button
                         type="link"
                         onClick={(e) => {
-                          //store.dispatch(setCommentComponentAction());
-                          store.dispatch(() => getPostsComments(card?.id));
+                          store.dispatch(setCommentComponentAction());
+                          store.dispatch(() =>
+                            getPostsCommentsAction(card?.id)
+                          );
                         }}
                       >
                         Коменти
                       </Button>
-                      <Button type="link">Альбом автора</Button>
+                      <Button
+                        type="link"
+                        onClick={(e) => {
+                          store.dispatch(setFotosComponentAction());
+                          store.dispatch(() => getFotosAction(card?.userId));
+                        }}
+                      >
+                        Альбом автора
+                      </Button>
                     </div>
                   )}
                 </div>

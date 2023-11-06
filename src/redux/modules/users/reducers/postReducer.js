@@ -1,4 +1,5 @@
 import store from "../store";
+import { clearPostAction, CLEAR_POST, hidePost } from "./getPosts";
 
 const GET_POSTS = "GET_POSTS";
 const CREATE_POST = "CREATE_POST";
@@ -23,8 +24,11 @@ export const deletePostById = (id) => {
 export const getCommentsAction = (json) => {
   return { type: LISTING_NESTED_POST, payload: json };
 };
-export const createPostAction = (json) => {
+export const newPostAction = (json) => {
   return { type: CREATE_POST, payload: json };
+};
+export const hidePostAction = (id) => {
+  return clearPostAction(id);
 };
 
 /* {
@@ -34,7 +38,7 @@ export const createPostAction = (json) => {
     userId: 1
   } */
 
-const postReducer = (state = [], action = {}) => {
+const postReducer = (state = [], action = { type: "", payload: null }) => {
   switch (action.type) {
     /* case GET_POST_BY_ID: {
       fetch(`https://jsonplaceholder.typicode.com/posts/${action.payload}`)
@@ -67,7 +71,10 @@ const postReducer = (state = [], action = {}) => {
       return [];
     }
     case CREATE_POST: {
-      return [...state, { ...action.payload }];
+      return [...state, action.payload];
+    }
+    case CLEAR_POST: {
+      return hidePost(state, action);
     }
     default: {
       // Костыль через жопный
@@ -81,7 +88,7 @@ const postReducer = (state = [], action = {}) => {
 };
 
 // getAllPosts is the "thunk action creator"
-export function getAllPosts() {
+export function getAllPostsAction() {
   // getAllPosts is the "thunk function"
   return fetch("https://jsonplaceholder.typicode.com/posts")
     .then((response) => response.json())
@@ -91,7 +98,7 @@ export function getAllPosts() {
     })
     .catch((error) => console.error(error));
 }
-export function getPostsComments(id) {
+export function getPostsCommentsAction(id) {
   // This is equivalent to /comments?postId=1
   return fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
     .then((response) => response.json())
@@ -101,7 +108,17 @@ export function getPostsComments(id) {
     })
     .catch((error) => console.error(error));
 }
-export function createPost(
+export function getFotosAction(id) {
+  // This is equivalent to /comments?postId=1
+  return fetch(`https://jsonplaceholder.typicode.com//albums/${id}/photos`)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log("LISTING_NESTED_POST: ok");
+      store.dispatch(getCommentsAction(json));
+    })
+    .catch((error) => console.error(error));
+}
+export function createPostAction(
   post = {
     title: "foo",
     body: "bar",
@@ -116,7 +133,7 @@ export function createPost(
     },
   })
     .then((response) => response.json())
-    .then((json) => store.dispatch(createPostAction(json)))
+    .then((json) => store.dispatch(newPostAction(json)))
     .catch((error) => console.error(error));
 }
 export default postReducer;
