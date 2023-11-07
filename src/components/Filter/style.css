@@ -1,8 +1,8 @@
 .user-list__filter {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  border-top: 2px solid rgb(5, 5, 5);
-  border-bottom: 2px solid rgb(5, 5, 5);
+  border-top: 3px solid rgb(200, 200, 200);
+  border-bottom: 3px solid rgb(200, 200, 200);
 }
 
 .user-list__paging {

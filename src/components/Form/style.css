@@ -1,0 +1,19 @@
+#components-form-demo-control-hooks .ant-btn {
+  margin-right: 8px;
+}
+div.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+.form-create-post__empty {
+  border-top: 3px solid rgb(200, 200, 200);
+  border-bottom: 3px solid rgb(200, 200, 200);
+  height: 32px;
+}
+div.ant-form-item-control-input-content > button {
+  margin: 10px;
+}
+div.ant-form-item-control-input {
+  width: 400px;
+}

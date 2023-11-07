@@ -10,7 +10,6 @@ const getCachePosts = (
 ) => {
   switch (action.type) {
     case GET_POSTS_FROM_CACHE: {
-      //console.log("GET_POSTS_FROM_CACHE: ok");
       return [...cachePosts];
     }
     case CLEAR_POSTS: {

@@ -4,10 +4,7 @@ import { clearPostAction, CLEAR_POST, hidePost } from "./getPosts";
 const GET_POSTS = "GET_POSTS";
 const CREATE_POST = "CREATE_POST";
 const GET_POST_BY_ID = "GET_POST_BY_ID";
-//const UPDATE_POST = "UPDATE_POST";
-//const PATCH_POST = "PATCH_POST";
 const DELETE_POST = "DELETE_POST";
-//const FILTER_POST = "FILTER_POST";
 const LISTING_NESTED_POST = "LISTING_NESTED_POST";
 const CLEAR_POSTS = "CLEAR_POSTS";
 
@@ -40,30 +37,9 @@ export const hidePostAction = (id) => {
 
 const postReducer = (state = [], action = { type: "", payload: null }) => {
   switch (action.type) {
-    /* case GET_POST_BY_ID: {
-      fetch(`https://jsonplaceholder.typicode.com/posts/${action.payload}`)
-        .then((response) => response.json())
-        .then((json) => {
-          console.log("GET_POST_BY_ID: ok");
-          result = json;
-        })
-        .catch((error) => console.error(error));
-      return [{ ...result }];
-    } */
     case GET_POSTS: {
       return [...action.payload];
     }
-    /* case DELETE_POST: {
-      fetch(`https://jsonplaceholder.typicode.com/posts/${action.payload}`, {
-        method: "DELETE",
-      })
-        .then((response) => console.log("DELETE_POST: ok"))
-        .catch((error) => console.error(error));
-      return state.filter((post) => {
-        if (post.id === action.payload) return false;
-        return true;
-      });
-    } */
     case LISTING_NESTED_POST: {
       return [...action.payload];
     }
@@ -77,7 +53,6 @@ const postReducer = (state = [], action = { type: "", payload: null }) => {
       return hidePost(state, action);
     }
     default: {
-      // Костыль через жопный
       /* console.log("POST_REDUCER_DEFAULT: ok");
       if (action?.payload && action?.payload !== null)
         return [...action.payload];
@@ -133,7 +108,7 @@ export function createPostAction(
     },
   })
     .then((response) => response.json())
-    .then((json) => store.dispatch(newPostAction(json)))
+    .then((json) => store.dispatch(newPostAction({ ...json, post })))
     .catch((error) => console.error(error));
 }
 export default postReducer;
